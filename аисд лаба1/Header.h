@@ -1,17 +1,66 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <cmath>
+#include <random>
+#include <ctime>
 using namespace std;
 
 class _matrix {
 private:
 	double** data;
 	int row, column;
+
+	static double determenant_(const _matrix& matrix, int N) {
+		if (matrix.column != matrix.row) {
+			return NULL;
+		}
+		else if (N == 1) {
+			return matrix.data[0][0];
+		}
+		else if (N == 2) {
+			return matrix.data[0][0] * matrix.data[1][1] - matrix.data[0][1] * matrix.data[1][0];
+		}
+		else {
+			double determ = 0;
+
+			for (int k = 0; k < N; k++) {
+
+				double** temp = new double* [N - 1];
+				for (int i = 0; i < N - 1; i++) {
+					temp[i] = new double[N - 1];
+				}
+
+				for (int i = 1; i < N; i++) {
+					for (int j = 0; j < N; j++) {
+
+						if (j == k) {
+							continue;
+						}
+						else if (j < k) {
+							temp[i - 1][j] = matrix.data[i][j];
+						}
+						else {
+							temp[i - 1][j - 1] = matrix.data[i][j];
+						}
+					}
+				}
+				determ += pow(-1, k + 2) * matrix.data[0][k] * determenant_(_matrix(temp, N - 1, N - 1), N - 1);
+
+				for (size_t i = 0; i < static_cast<unsigned long long>(N) - 1; i++)
+				{
+					delete[] temp[i];
+				}
+				delete[] temp;
+			}
+			return determ;
+		}
+	}
+
 public:
 	_matrix() {
-		row = 3;
-		column = 3;
+		srand(time(0));
+		row = rand() % 3 + 2;
+		column = row;
 		data = new double* [row];
 		for (size_t i = 0; i < row; ++i)
 		{
@@ -21,10 +70,7 @@ public:
 		{
 			for (size_t j = 0; j < column; j++)
 			{
-				data[i][j] = 0;
-				if (i == j) {
-					data[i][j] = 1;
-				}
+				data[i][j] = (rand() % 300) / 10.0;
 			}
 		}
 	}
@@ -46,7 +92,7 @@ public:
 		{
 			for (size_t j = 0; j < column; j++)
 			{
-				cout << "[" << i+1 << "][" << j+1 << "]: ";
+				cout << "[" << i  << "][" << j  << "]: ";
 				double temp_value;
 				cin >> temp_value;
 				data[i][j] = temp_value;
@@ -74,6 +120,8 @@ public:
 	}
 
 	_matrix(double** matrix, int _row,int _column) {
+		if (_row < 1 or _column < 1) throw "Invalid matrix size";
+
 		row = _row;
 		column = _column;
 
@@ -124,7 +172,7 @@ public:
 		{
 			for (int j = 0; j < rhs.column; ++j)
 			{
-				cout.width(20);
+				cout.width(10);
 				os <<left<< rhs.data[i][j] << '\t';
 			}
 			os << endl;
@@ -155,7 +203,7 @@ public:
 	}
 
 	_matrix& operator+=(const _matrix& matrix) {
-		if (this->row != matrix.row or this->column != matrix.column) throw "Dimensions do not match!";
+		if (row != matrix.row or column != matrix.column) throw "Dimensions do not match!";
 		double** temp;
 
 		temp = new double* [matrix.row];
@@ -189,7 +237,7 @@ public:
 	}
 
 	_matrix& operator-=(const _matrix& matrix) {
-		if (this->row != matrix.row or this->column != matrix.column) throw "Dimensions do not match!";
+		if (row != matrix.row or column != matrix.column) throw "Dimensions do not match!";
 
 		double** temp;
 
@@ -320,7 +368,7 @@ public:
 	_matrix inversion() {
 		if (row != column) { throw "The matrix is not square"; }
 
-		if (determenant(*this, this->column) == 0) { throw "the determinant of the matrix is 0"; }
+		if (determenant() == 0) { throw "The determinant of the matrix is 0"; }
 
 		double temp;								
 		int N = row;								//размерность
@@ -393,8 +441,12 @@ public:
 
 		return inversion_matrix;
 	}
+
+	double determenant() const {
+		return determenant_(*this, row);
+	}
 	
-	friend double determenant(const _matrix& matrix, int N) {
+	/*friend double determenant(const _matrix& matrix, int N) {
 		if (matrix.column != matrix.row) {
 			return NULL;
 		}
@@ -438,6 +490,6 @@ public:
 			}
 			return determ;
 		}
-	}
+	}*/
 
 };
