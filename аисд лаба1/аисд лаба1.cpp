@@ -100,14 +100,19 @@ int main()
 	catch (const char* err) {
 		cout << err << endl;
 	}
-	_matrix<complex<double>> g = b * 3.5; cout << g << endl;
-	_matrix<complex<double>> t = 3.5 * b; cout << t << endl;
-	_matrix<complex<double>> x = c / 7; cout << x << endl;
-		
-	if (g == t)
+	try {
+		_matrix<complex<double>> g = b * complex<double>(3.5, 6.7); cout << g << endl;
+		_matrix<complex<double>> t = 3.5 * b; cout << t << endl;
+		_matrix<complex<double>> x = c / 7; cout << x << endl;
+	}
+	catch (const char* err) {
+		cout << err << endl;
+	}
+
+	/*if (g == t)
 		cout << "G==T" << endl;
 	else
-		cout << "G!=T" << endl;
+		cout << "G!=T" << endl;*/
 
 	complex<double> trace =(b*c).matrix_trace(); cout << trace << endl;
 

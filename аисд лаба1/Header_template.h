@@ -760,7 +760,7 @@ public:
 		return temp;
 	}
 
-	_matrix<complex<T>>& operator*=(double value) {        //??????
+	_matrix<complex<T>>& operator*=(complex<T> value) {        //??????
 		for (size_t i = 0; i < row; i++)
 		{
 			for (size_t j = 0; j < column; j++)
@@ -771,20 +771,43 @@ public:
 		return *this;
 	}
 
-	_matrix<complex<T>> operator*(double value) const {
+	_matrix<complex<T>> operator*(complex<T> value) const {
 		_matrix temp(*this);
 		temp *= value;
 		return temp;
 	}
 
-	friend _matrix<complex<T>> operator*(double value, const _matrix<complex<T>>& matrix) {
+	friend _matrix<complex<T>> operator*(complex<T> value, const _matrix<complex<T>>& matrix) {
 		_matrix temp(matrix);
 		temp *= value;
 		return temp;
 	}
 
-	_matrix<complex<T>>& operator/=(double value) {
-		if (value == 0) throw "Division by zero";
+	_matrix<complex<T>>& operator*=(T value) {        //??????
+		for (size_t i = 0; i < row; i++)
+		{
+			for (size_t j = 0; j < column; j++)
+			{
+				data[i][j] = data[i][j] * value;
+			}
+		}
+		return *this;
+	}
+
+	_matrix<complex<T>> operator*(T value) const {
+		_matrix temp(*this);
+		temp *= value;
+		return temp;
+	}
+
+	friend _matrix<complex<T>> operator*(T value, const _matrix<complex<T>>& matrix) {
+		_matrix temp(matrix);
+		temp *= value;
+		return temp;
+	}
+
+	_matrix<complex<T>>& operator/=(complex<T> value) {
+		if (value.real() == 0 or value.imag()) { throw "Division by zero"; }
 		for (size_t i = 0; i < row; i++)
 		{
 			for (size_t j = 0; j < column; j++)
@@ -795,7 +818,25 @@ public:
 		return *this;
 	}
 
-	_matrix<complex<T>> operator/(double value) const {
+	_matrix<complex<T>> operator/(complex<T> value) const {
+		_matrix temp(*this);
+		temp /= value;
+		return temp;
+	}
+
+	_matrix<complex<T>>& operator/=(T value) {
+		if (value == 0) { throw "Division by zero"; }
+		for (size_t i = 0; i < row; i++)
+		{
+			for (size_t j = 0; j < column; j++)
+			{
+				data[i][j] = data[i][j] / value;
+			}
+		}
+		return *this;
+	}
+
+	_matrix<complex<T>> operator/(T value) const {
 		_matrix temp(*this);
 		temp /= value;
 		return temp;
