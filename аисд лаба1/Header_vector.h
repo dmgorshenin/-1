@@ -245,7 +245,7 @@ public:
 
 	friend ostream& operator<<(ostream& os, const _matrix<T>& rhs)
 	{
-		for (const auto i : rhs.data) {
+		for (const auto i : rhs) {
 			for (const auto j : i) {
 				cout.width(10);
 				os << left << j<<'\t';
@@ -722,7 +722,7 @@ public:
 
 	friend ostream& operator<<(ostream& os, const _matrix<complex<T>>& rhs)
 	{
-		for (const auto& i : rhs.data) {
+		for (const auto& i : rhs) {
 			for (const auto& j : i) {
 				cout.width(15);
 				os << left << setprecision(4) << j << '\t';

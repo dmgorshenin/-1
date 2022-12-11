@@ -46,7 +46,7 @@ int main()
 	//else
 	//	cout << "G!=T" << endl;
 
-	//int trace = b.matrix_trace(); cout << trace << endl;
+	//int trace = a.matrix_trace(); cout << trace << endl;
 
 	//cout << b(0, 0) << endl;
 	//b(0, 0) = 7824;
@@ -195,7 +195,7 @@ int main()
 	else
 	cout << "G!=T" << endl;
 	
-	float trace = b.matrix_trace(); cout << trace << endl;
+	float trace = a.matrix_trace(); cout << trace << endl;
 	
 	cout << b(0, 0) << endl;
 	b(0, 0) = 7824;
