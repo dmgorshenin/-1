@@ -132,6 +132,8 @@
   <ItemGroup>
     <ClInclude Include="Header.h" />
     <ClInclude Include="Header_template.h" />
+    <ClInclude Include="Header_vector.h" />
+    <ClInclude Include="vv_iterator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

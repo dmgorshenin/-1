@@ -26,5 +26,11 @@
     <ClInclude Include="Header_template.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="Header_vector.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="vv_iterator.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
